@@ -1,35 +1,68 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:jim/components/workout_log.dart';
-import 'package:jim/components/workout_screen.dart';
-import 'components/home_screen.dart';
-import 'components/profile_screen.dart';
+import 'package:jim/screens/home/home_screen.dart';
+
+import 'package:logger/logger.dart';
+
+import 'screens/profile/profile_screen.dart';
 
 void main() {
-  runApp(MaterialApp(
-    debugShowCheckedModeBanner: false,
-    theme: ThemeData(
-      textTheme: TextTheme(
-        headlineMedium: GoogleFonts.poppins(
-            fontSize: 32, fontWeight: FontWeight.bold), // For larger headings
-        bodyMedium: GoogleFonts.poppins(fontSize: 18), // For body text
-        // You can define more styles here if needed
-      ),
-    ),
-    home: Scaffold(
-        appBar: AppBar(
-          backgroundColor: color,
-          centerTitle: true,
-          title: Image.asset(
-            'assets/logos/logo1.png',
-            width: 80,
-          ),
-          shadowColor: Colors.black,
+  final logger = Logger();
+  logger.d('hello');
+  runApp(const JimApp());
+}
+
+class JimApp extends StatelessWidget {
+  const JimApp({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+            textTheme: GoogleFonts.poppinsTextTheme(
+          Theme.of(context).textTheme,
+        )
+            // .copyWith(
+            //     headlineMedium: GoogleFonts.openSans(
+            //       fontSize: 32,
+            //       fontWeight: FontWeight.bold,
+            //     ),
+            //     // bodyMedium: GoogleFonts.roboto(fontSize: 18),
+            //     ),
+            ),
+        home: const MainScreen());
+  }
+}
+
+class MainScreen extends StatefulWidget {
+  const MainScreen({super.key});
+
+  @override
+  State<MainScreen> createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen> {
+  int currentPageIndex = 0;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        bottomNavigationBar: NavigationBar(
+          destinations: const [
+            NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
+            NavigationDestination(icon: Icon(Icons.person), label: 'Profile'),
+          ],
+          selectedIndex: currentPageIndex,
+          onDestinationSelected: (int index) {
+            setState(() {
+              currentPageIndex = index;
+            });
+          },
         ),
-        body:
-            // const ProfileScreen()
-            // const WorkoutScreen()
-            // const HomeScreen()),
-            const WorkoutLogScreen()),
-  ));
+        body: IndexedStack(
+            index: currentPageIndex,
+            children: const [HomeScreen(), ProfileScreen()]));
+  }
 }

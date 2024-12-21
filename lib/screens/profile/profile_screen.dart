@@ -24,7 +24,7 @@ class ProfileScreen extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          Text(
+          const Text(
             'Phuravong Pech',
             style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
           ),
