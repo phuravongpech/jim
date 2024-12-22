@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jim/data/workout_data.dart';
+import 'package:jim/models/workout_exercise.dart';
 import 'package:logger/logger.dart';
 
 import '../../models/workout.dart';
@@ -16,26 +17,29 @@ class WorkoutScreen extends StatefulWidget {
 }
 
 class _WorkoutScreenState extends State<WorkoutScreen> {
-  late final list =
-      widget.currentWorkout.getExercisesFromWorkout(workoutExercises);
+  final List<WorkoutExercise> list = [];
   final List<WorkoutLog> logDataList = [];
   final logger = Logger();
+  final List<GlobalKey<ExerciseCardState>> exerciseCardKeys = [];
+
+  @override
+  void initState() {
+    super.initState();
+    list.addAll(widget.currentWorkout.getExercisesFromWorkout(workoutExercises));
+    exerciseCardKeys.addAll(List.generate(list.length, (index) => GlobalKey<ExerciseCardState>()));
+  }
 
   void _saveWorkout() {
-    // // Validate that logs are not empty before saving
-    // if (logDataList.isNotEmpty) {
-    //   Navigator.pop(context, logDataList);
-    // } else {
-    //   // Optional: Show a dialog or snackbar that no logs have been recorded
-    //   ScaffoldMessenger.of(context).showSnackBar(
-    //     const SnackBar(
-    //         content: Text('Please log at least one set before saving')),
-    //   );
-    // }
-    logger.d(logDataList.map((e) => e.workoutExercise.exercise).toString());
+    logDataList.clear();
+    for (var i = 0; i < exerciseCardKeys.length; i++) {
+      final logs = exerciseCardKeys[i].currentState?.validateDataFromEachSet();
+      if (logs != null) {
+        logDataList.addAll(logs);
+      }
+    }
+
     Navigator.pop(context, logDataList);
-    // print(
-    //     'log data list = ${}');
+    logger.d(logDataList);
   }
 
   @override
@@ -66,15 +70,10 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
       body: ListView.builder(
         itemCount: list.length,
         itemBuilder: (context, index) => ExerciseCard(
+          key: exerciseCardKeys[index],
           currentWorkoutExercise: list[index],
-          addLog: (data) {
-            setState(() {
-              logDataList.addAll(data);
-            });
-          },
         ),
       ),
     );
   }
 }
-

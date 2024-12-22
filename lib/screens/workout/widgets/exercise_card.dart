@@ -1,5 +1,5 @@
-
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 
 import '../../../models/workout_exercise.dart';
 import '../../../models/workout_log.dart';
@@ -7,21 +7,40 @@ import 'exercise_log_card.dart';
 
 class ExerciseCard extends StatefulWidget {
   final WorkoutExercise currentWorkoutExercise;
-  final Function(List<WorkoutLog>) addLog;
 
   const ExerciseCard({
     super.key,
     required this.currentWorkoutExercise,
-    required this.addLog,
   });
 
   @override
-  State<ExerciseCard> createState() => _ExerciseCardState();
+  State<ExerciseCard> createState() => ExerciseCardState();
 }
 
-class _ExerciseCardState extends State<ExerciseCard> {
-  bool isOpened = false;
+class ExerciseCardState extends State<ExerciseCard> {
+  bool isOpened = true;
   List<WorkoutLog> currentExerciseLogs = [];
+  final List<GlobalKey<ExerciseLogCardState>> logList = [];
+
+  final logger = Logger();
+
+  @override
+  void initState() {
+    super.initState();
+    logList.addAll(List.generate(widget.currentWorkoutExercise.set,
+        (index) => GlobalKey<ExerciseLogCardState>()));
+  }
+
+  List<WorkoutLog>? validateDataFromEachSet() {
+    currentExerciseLogs.clear();
+    for (var i = 0; i < widget.currentWorkoutExercise.set; i++) {
+      final log = logList[i].currentState?.validateAndCreateLog;
+      if (log != null) {
+        currentExerciseLogs.add(log);
+      }
+    }
+    return currentExerciseLogs.isNotEmpty ? currentExerciseLogs : null;
+  }
 
   void onClicked() {
     setState(() {
@@ -71,18 +90,12 @@ class _ExerciseCardState extends State<ExerciseCard> {
               ),
               if (isOpened)
                 Column(
-                  children: [
-                    for (var i = 0; i < widget.currentWorkoutExercise.set; i++)
-                      ExerciseLogCard(
-                        workoutExercise: widget.currentWorkoutExercise,
-                        setNumber: i,
-                        onLogUpdated: (log) {
-                          currentExerciseLogs.add(log!);
-                          widget.addLog(currentExerciseLogs);
-                        },
-                      ),
-                  ],
-                )
+                    children: List.generate(
+                        widget.currentWorkoutExercise.set,
+                        (index) => ExerciseLogCard(
+                            key: logList[index],
+                            workoutExercise: widget.currentWorkoutExercise,
+                            setNumber: index)))
             ],
           ),
         ),

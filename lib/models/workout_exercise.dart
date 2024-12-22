@@ -21,6 +21,6 @@ class WorkoutExercise {
 
   @override
   String toString() {
-    return 'WorkoutExercise{id: $id, workout: ${workout.name}, exercise: ${exercise.name}, set: $set, restTimeSecond: $restTimeSecond}';
+    return 'WorkoutExercise{\n  workout: ${workout.name},\n  exercise: ${exercise.name},\n  set: $set,\n  restTimeSecond: $restTimeSecond\n}';
   }
 }

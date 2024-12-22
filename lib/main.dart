@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:jim/data/workout_data.dart';
 import 'package:jim/screens/home/home_screen.dart';
+import 'package:jim/screens/workout/workout_screen.dart';
 
 import 'package:logger/logger.dart';
 
@@ -63,6 +65,33 @@ class _MainScreenState extends State<MainScreen> {
         ),
         body: IndexedStack(
             index: currentPageIndex,
-            children: const [HomeScreen(), ProfileScreen()]));
+            // children: const [HomeScreen(), ProfileScreen()]));
+            children: [
+              WorkoutScreen(currentWorkout: workouts[0]),
+              const ProfileScreen()
+            ]));
   }
 }
+// class _MainScreenState extends State<MainScreen> {
+//   int currentPageIndex = 0;
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//         bottomNavigationBar: NavigationBar(
+//           destinations: const [
+//             NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
+//             NavigationDestination(icon: Icon(Icons.person), label: 'Profile'),
+//           ],
+//           selectedIndex: currentPageIndex,
+//           onDestinationSelected: (int index) {
+//             setState(() {
+//               currentPageIndex = index;
+//             });
+//           },
+//         ),
+//         body: IndexedStack(
+//             index: currentPageIndex,
+//             // children: const [HomeScreen(), ProfileScreen()]));
+//             children: const [HomeScreen(), ProfileScreen()]));
+//   }
+// }

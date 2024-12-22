@@ -18,6 +18,11 @@ class WorkoutLog {
 
   @override
   String toString() {
-    return 'WorkoutLog{id: $id, workoutExercise: ${workoutExercise.exercise.name}, weight: $weight, rep: $rep, setNumber: $setNumber}';
+    return 'WorkoutLog{\n'
+        '  workoutExercise: ${workoutExercise.exercise.name},\n'
+        '  weight: $weight,\n'
+        '  rep: $rep,\n'
+        '  setNumber: $setNumber\n'
+        '}';
   }
 }

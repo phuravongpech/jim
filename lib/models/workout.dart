@@ -38,7 +38,13 @@ class Workout {
 
   @override
   String toString() {
-    return 'Workout{id: $id, name: $name, description: $description, date: $date, isCompleted: $isCompleted, exercises: $exercises}';
+    return 'Workout{\n'
+        '  name: $name,\n'
+        '  description: $description,\n'
+        '  date: $date,\n'
+        '  isCompleted: $isCompleted,\n'
+        '  exercises: $exercises\n'
+        '}';
   }
 
   List<WorkoutExercise> getExercisesFromWorkout(

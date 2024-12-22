@@ -17,6 +17,6 @@ class Exercise {
 
   @override
   String toString() {
-    return 'Exercise{id: $id, name: $name, description: $description, category: $category}';
+    return 'Exercise{\n  name: $name,\n  description: $description,\n  category: $category\n}';
   }
 }
