@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import '../../../models/workout_exercise.dart';
@@ -29,68 +28,80 @@ class _WorkoutExerciseCardState extends State<WorkoutExerciseCard> {
 
   @override
   Widget build(BuildContext context) {
+    final logs = widget.workoutLogs
+        .where((log) =>
+            log.workoutExercise.exercise == widget.workoutExercise.exercise)
+        .toList();
+
     return Padding(
-      padding: const EdgeInsets.only(left: 10, right: 10, top: 20),
+      padding: const EdgeInsets.symmetric(vertical: 10),
       child: Container(
-        padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: const BorderRadius.all(Radius.circular(10)),
+          borderRadius: BorderRadius.circular(15),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
+              color: Colors.grey.withOpacity(0.1),
               spreadRadius: 2,
               blurRadius: 5,
-              offset: const Offset(0, 3), // changes position of shadow
-            )
+              offset: const Offset(0, 3),
+            ),
           ],
-          border: Border.all(color: const Color.fromARGB(255, 221, 221, 221)),
         ),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              ListTile(
-                  onTap: onClicked,
-                  // leading: Image.asset('assets/logos.logo1.png'),
-                  title: Text(
-                    widget.workoutExercise.exercise.name,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        widget.workoutExercise.exercise.description,
-                      ),
-                      Text(
-                        '${widget.workoutExercise.restTimeSecond.toString()} seconds',
-                      ),
-                    ],
-                  ),
-                  trailing: isOpened
-                      ? const Icon(
-                          Icons.arrow_drop_down_outlined,
-                          size: 40,
-                        )
-                      : const Icon(
-                          Icons.arrow_drop_up_outlined,
-                          size: 40,
-                        )),
-              Divider(
-                thickness: 1,
-                color: Colors.black.withOpacity(0.1),
+        child: Column(
+          children: [
+            ListTile(
+              contentPadding:
+                  const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              onTap: onClicked,
+              title: Text(
+                widget.workoutExercise.exercise.name,
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-              if (isOpened)
-                Column(
-                    children: widget.workoutLogs
-                        .where((e) =>
-                            widget.workoutExercise.exercise ==
-                            e.workoutExercise.exercise)
-                        .map((e) => WorkoutExerciseLogCard(workoutLog: e))
-                        .toList()
-                        .cast<Widget>())
-            ],
-          ),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    widget.workoutExercise.exercise.description,
+                    style: const TextStyle(fontSize: 14, color: Colors.grey),
+                  ),
+                  const SizedBox(height: 5),
+                  Text(
+                    'Rest: ${widget.workoutExercise.restTimeSecond} sec',
+                    style: const TextStyle(fontSize: 14, color: Colors.grey),
+                  ),
+                ],
+              ),
+              trailing: Icon(
+                isOpened
+                    ? Icons.keyboard_arrow_down_rounded
+                    : Icons.keyboard_arrow_up_rounded,
+                size: 30,
+              ),
+            ),
+            if (isOpened)
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: logs.isNotEmpty
+                    ? Column(
+                        children: logs
+                            .map((log) => Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 5),
+                                  child:
+                                      WorkoutExerciseLogCard(workoutLog: log),
+                                ))
+                            .toList(),
+                      )
+                    : const Padding(
+                        padding: EdgeInsets.only(top: 8.0, bottom: 15),
+                        child: Center(child: Text('No logs available')),
+                      ),
+              ),
+          ],
         ),
       ),
     );

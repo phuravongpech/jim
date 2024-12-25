@@ -2,69 +2,93 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:jim/data/workout_data.dart';
 import 'package:jim/models/workout.dart';
-
+import 'package:logger/logger.dart';
 import 'widgets/workout_exercise_card.dart';
 
 class WorkoutLogScreen extends StatelessWidget {
   final Workout currentWorkout;
   late final exerciseList =
       currentWorkout.getExercisesFromWorkout(workoutExercises);
+
+  final log = Logger();
+
   late final list = currentWorkout.getWorkoutLogFromWorkoutExercise(
       workoutLogs, exerciseList);
   WorkoutLogScreen({super.key, required this.currentWorkout});
 
   @override
   Widget build(BuildContext context) {
+    log.d('ex list : $exerciseList');
+    log.d(list);
     String formattedDate = DateFormat('MMMM d, y').format(currentWorkout.date);
 
     return Scaffold(
+      backgroundColor: Colors.grey.shade100,
       appBar: AppBar(
-        backgroundColor: const Color(0xFF05b6ca),
+        elevation: 0,
+        backgroundColor: Colors.white,
         centerTitle: true,
-        title: Image.asset(
-          'assets/logos/logo1.png',
-          width: 80,
+        title: const Text(
+          'Workout Log',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
         ),
-        shadowColor: Colors.black,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            color: Colors.black,
+          ),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding:
-                const EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                    // workoutLogs[1].workoutExercise.workout.id,
-                    list.first.workoutExercise.workout.name.toUpperCase(),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            if (list.isNotEmpty)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    list.first.workoutExercise.workout.name,
                     style: const TextStyle(
-                        fontSize: 18, fontWeight: FontWeight.bold)),
-                Text(
-                  formattedDate,
-                  style: const TextStyle(
-                      fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 5,
-          ),
-          Expanded(
-            child: ListView(
-              children: [
-                ...exerciseList.map((exercise) => WorkoutExerciseCard(
-                      workoutExercise: exercise,
-                      workoutLogs: list,
-                    )),
-                const SizedBox(
-                  height: 20,
-                )
-              ],
-            ),
-          ),
-        ],
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    formattedDate,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ],
+              ),
+            const SizedBox(height: 10),
+            Divider(thickness: 1, color: Colors.grey.shade300),
+            const SizedBox(height: 10),
+            exerciseList.isNotEmpty || list.isNotEmpty
+                ? Expanded(
+                    child: ListView.builder(
+                      itemCount: exerciseList.length,
+                      itemBuilder: (context, index) {
+                        return WorkoutExerciseCard(
+                          workoutExercise: exerciseList[index],
+                          workoutLogs: list,
+                        );
+                      },
+                    ),
+                  )
+                : const Center(child: Text('No data')),
+          ],
+        ),
       ),
     );
   }

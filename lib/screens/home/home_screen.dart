@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:jim/data/workout_data.dart';
 import 'package:jim/screens/home/widgets/workout_card.dart';
-
-const color = Color(0xFF05b6ca);
+import 'package:jim/utils/color_theme.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({
@@ -13,8 +12,9 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: bgColor,
       appBar: AppBar(
-        backgroundColor: color,
+        backgroundColor: primaryColor,
         centerTitle: true,
         title: Image.asset(
           'assets/logos/logo1.png',
@@ -22,13 +22,13 @@ class HomeScreen extends StatelessWidget {
         ),
         shadowColor: Colors.black,
       ),
-      body: Center(
-        child: Expanded(
-          child: ListView.builder(
-              itemCount: workouts.length, //workout list
-              itemBuilder: (context, index) => WorkoutCard(
-                    workout: workouts[index], //workout as parameter
-                  )),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: ListView.builder(
+          itemCount: workouts.length,
+          itemBuilder: (context, index) => WorkoutCard(
+            workout: workouts[index],
+          ),
         ),
       ),
     );

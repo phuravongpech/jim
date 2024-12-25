@@ -1,40 +1,59 @@
 // ignore_for_file: avoid_print
-
+import 'package:flutter/material.dart';
 import 'package:jim/models/exercise.dart';
 import 'package:jim/utils/utils.dart';
 
 import 'workout_exercise.dart';
 import 'workout_log.dart';
 
-// void main() {
-//   List<WorkoutExercise> we1 =
-//       getExercisesFromWorkout(workoutExercises, workouts[0]);
-//   print(we1);
+enum Category { strength, powerlifting, cardio }
 
-//   var list = getWorkoutLogFromWorkoutExercise(workoutLogs, we1);
-//   print(list.map((e) => e.workoutExercise.exercise.name));
-// }
+extension CategoryExtension on Category {
+  IconData get icon {
+    switch (this) {
+      case Category.strength:
+        return Icons.fitness_center;
+      case Category.powerlifting:
+        return Icons.sports_mma;
+      case Category.cardio:
+        return Icons.directions_run;
+      default:
+        return Icons.help;
+    }
+  }
+
+  String get name {
+    switch (this) {
+      case Category.strength:
+        return 'Strength';
+      case Category.powerlifting:
+        return 'Powerlifting';
+      case Category.cardio:
+        return 'Cardio';
+      default:
+        return 'Unknown';
+    }
+  }
+}
 
 class Workout {
-  final String id; // Unique identifier for the workout
+  final String id;
   final String name;
   final String description;
   final DateTime date;
   bool isCompleted;
   final List<Exercise> exercises;
+  final Category category; // Enum for workout type
 
   Workout({
-    String? id, // Optional parameter
+    String? id,
     required this.name,
     required this.description,
     required this.exercises,
     required this.date,
+    required this.category, // Assign a category
     this.isCompleted = false,
-  }) : id = id ?? Utils.generateUuid(); // Generate a new UUID if not provided
-
-  bool validate() => exercises.isNotEmpty;
-
-  void completeWorkout() => isCompleted = true;
+  }) : id = id ?? Utils.generateUuid();
 
   @override
   String toString() {
@@ -43,7 +62,8 @@ class Workout {
         '  description: $description,\n'
         '  date: $date,\n'
         '  isCompleted: $isCompleted,\n'
-        '  exercises: $exercises\n'
+        '  exercises: $exercises,\n'
+        '  category: $category\n'
         '}';
   }
 

@@ -4,6 +4,7 @@ import 'package:logger/logger.dart';
 import '../../../models/workout_exercise.dart';
 import '../../../models/workout_log.dart';
 import 'exercise_log_card.dart';
+import '../../../utils/color_theme.dart';
 
 class ExerciseCard extends StatefulWidget {
   final WorkoutExercise currentWorkoutExercise;
@@ -74,18 +75,35 @@ class ExerciseCardState extends State<ExerciseCard> {
                 onTap: onClicked,
                 title: Text(
                   widget.currentWorkoutExercise.exercise.name,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                    color: textColor,
+                  ),
                 ),
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(widget.currentWorkoutExercise.exercise.description),
-                    Text('${widget.currentWorkoutExercise.set} sets x 15 reps'),
+                    Text(
+                      widget.currentWorkoutExercise.exercise.description,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        color: subTextColor,
+                      ),
+                    ),
+                    Text(
+                      '${widget.currentWorkoutExercise.set} sets x 15 reps',
+                      style: const TextStyle(
+                        fontSize: 16,
+                        color: subTextColor,
+                      ),
+                    ),
                   ],
                 ),
                 trailing: Icon(
-                  isOpened ? Icons.expand_less : Icons.circle_outlined,
-                  size: 40,
+                  isOpened ? Icons.expand_less : Icons.expand_more,
+                  size: 30,
+                  color: textColor,
                 ),
               ),
               if (isOpened)

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:jim/data/workout_data.dart';
 import 'package:jim/models/workout_exercise.dart';
 import 'package:logger/logger.dart';
@@ -25,8 +26,10 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
   @override
   void initState() {
     super.initState();
-    list.addAll(widget.currentWorkout.getExercisesFromWorkout(workoutExercises));
-    exerciseCardKeys.addAll(List.generate(list.length, (index) => GlobalKey<ExerciseCardState>()));
+    list.addAll(
+        widget.currentWorkout.getExercisesFromWorkout(workoutExercises));
+    exerciseCardKeys.addAll(
+        List.generate(list.length, (index) => GlobalKey<ExerciseCardState>()));
   }
 
   void _saveWorkout() {
@@ -42,28 +45,85 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
     logger.d(logDataList);
   }
 
+  void _showQuitDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Quit Workout'),
+          content: const Text('Are you sure you want to quit the workout?'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text(
+                'Cancel',
+                style: TextStyle(fontSize: 20),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.pop(context);
+              },
+              child: const Text('Quit', style: TextStyle(fontSize: 20)),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showSaveDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Save Workout'),
+          content: const Text('Are you sure you want to save the workout?'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Cancel', style: TextStyle(fontSize: 20)),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                _saveWorkout();
+              },
+              child: const Text('Save', style: TextStyle(fontSize: 20)),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     logger.d(list.map((e) => e.exercise.name.toString()).toString());
     return Scaffold(
       appBar: AppBar(
-        leading: Image.asset('assets/logos/logo2.png', width: 40, height: 40),
-        backgroundColor: const Color(0xFF05b6ca),
-        title: TextButton(
-          onPressed: () => Navigator.pop(context),
-          child: const Text('Cancel'),
+        backgroundColor: Colors.white,
+        elevation: 0, // Flat design
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
+          onPressed: _showQuitDialog,
+        ),
+        centerTitle: true,
+        title: Text(
+          widget.currentWorkout.name,
+          style: GoogleFonts.poppins(
+            textStyle: const TextStyle(
+              color: Colors.black,
+              fontSize: 20,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
         ),
         actions: [
-          Row(
-            children: [
-              const Icon(Icons.save_alt_sharp),
-              const SizedBox(width: 5),
-              GestureDetector(
-                onTap: _saveWorkout,
-                child: const Text('Save'),
-              ),
-              const SizedBox(width: 20),
-            ],
+          IconButton(
+            icon: const Icon(Icons.save_alt, color: Colors.black),
+            onPressed: _showSaveDialog,
           ),
         ],
       ),

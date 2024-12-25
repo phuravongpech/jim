@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:jim/data/workout_data.dart';
+import 'package:logger/logger.dart';
 
 import '../../../models/workout.dart';
 import '../../../models/workout_log.dart';
@@ -19,6 +20,7 @@ class WorkoutCard extends StatefulWidget {
 }
 
 class _WorkoutCardState extends State<WorkoutCard> {
+  final log = Logger();
   bool isLogged = false;
 
   @override
@@ -36,7 +38,7 @@ class _WorkoutCardState extends State<WorkoutCard> {
                         currentWorkout: widget.workout,
                       )));
         if (passedData != null) {
-          print(passedData);
+          log.d(passedData);
           setState(() {
             workoutLogs.addAll(passedData);
             isLogged = true;
@@ -67,17 +69,22 @@ class _WorkoutCardState extends State<WorkoutCard> {
                 children: [Text(formattedDate), Text(day)],
               ),
               ListTile(
-                leading: const Icon(
-                  Icons.circle_outlined,
-                  size: 40,
-                ),
-                title: Text(
-                  widget.workout.name,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-                subtitle: Text(widget.workout.description),
-                trailing: const Icon(Icons.nightlight_round_outlined),
-              )
+                  leading: isLogged
+                      ? const Icon(
+                          Icons.check_circle,
+                          size: 38,
+                          color: Colors.green,
+                        )
+                      : const Icon(
+                          Icons.circle_outlined,
+                          size: 40,
+                        ),
+                  title: Text(
+                    widget.workout.name,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  subtitle: Text(widget.workout.description),
+                  trailing: Icon(widget.workout.category.icon))
             ],
           ),
         ),

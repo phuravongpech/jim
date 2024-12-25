@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:jim/screens/workout/widgets/countdown_timer.dart';
 import 'package:logger/logger.dart';
-
 import '../../../models/workout_exercise.dart';
 import '../../../models/workout_log.dart';
+import '../../../utils/color_theme.dart';
 
 class ExerciseLogCard extends StatefulWidget {
   final WorkoutExercise workoutExercise;
@@ -45,7 +45,7 @@ class ExerciseLogCardState extends State<ExerciseLogCard> {
 
   String? validateRep(String? value) {
     if (value == null || int.tryParse(value) == null || int.parse(value) <= 0) {
-      return 'Rep range must be over number 0, Dont be lazy! ';
+      return 'Rep range must be over number 0, Don\'t be lazy!';
     }
     logger.d(value);
     return null;
@@ -93,7 +93,7 @@ class ExerciseLogCardState extends State<ExerciseLogCard> {
               'reps  x',
               style: TextStyle(
                 fontWeight: FontWeight.normal,
-                color: Colors.black54,
+                color: subTextColor,
               ),
             ),
             const SizedBox(width: 20),
@@ -123,11 +123,13 @@ class ExerciseLogCardState extends State<ExerciseLogCard> {
               'kg',
               style: TextStyle(
                 fontWeight: FontWeight.normal,
-                color: Colors.black54,
+                color: subTextColor,
               ),
             ),
             const Spacer(),
-            const Text('history set ...'),
+            CountdownTimer(
+              restTimeSecond: widget.workoutExercise.restTimeSecond,
+            )
           ],
         ),
         const SizedBox(height: 10),
@@ -136,15 +138,14 @@ class ExerciseLogCardState extends State<ExerciseLogCard> {
             Container(
               width: 50,
               height: 40,
-              decoration: BoxDecoration(color: Colors.yellow[700]),
-              child: const Icon(Icons.timer_outlined),
+              decoration: BoxDecoration(
+                color: accentColor,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: const Icon(Icons.timer_outlined, color: Colors.white),
             ),
             const SizedBox(width: 20),
             Text('Rest for ${widget.workoutExercise.restTimeSecond}s'),
-            const Spacer(),
-            CountdownTimer(
-              restTimeSecond: widget.workoutExercise.restTimeSecond,
-            )
           ],
         ),
         const SizedBox(height: 10),

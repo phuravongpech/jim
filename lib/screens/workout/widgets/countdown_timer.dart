@@ -44,10 +44,14 @@ class _CountdownTimerState extends State<CountdownTimer> {
                         });
                       }
                     },
-                    label: Text(time.toString()),
+                    label: Text(
+                      time.toString(),
+                      style: const TextStyle(fontSize: 20, color: Colors.black),
+                    ),
                     icon: isPaused
-                        ? const Icon(Icons.play_arrow_rounded)
-                        : const Icon(Icons.pause),
+                        ? const Icon(Icons.play_arrow_rounded,
+                            color: Color(0xFF05b6ca))
+                        : const Icon(Icons.pause, color: Color(0xFF05b6ca)),
                     iconAlignment: IconAlignment.start,
                   )
                 : TextButton.icon(
@@ -63,8 +67,14 @@ class _CountdownTimerState extends State<CountdownTimer> {
                         });
                       }
                     },
-                    label: const Text('Start'),
-                    icon: const Icon(Icons.access_time_rounded),
+                    label: const Text(
+                      'Start',
+                      style: TextStyle(fontSize: 15, color: Colors.black),
+                    ),
+                    icon: const Icon(
+                      Icons.access_time_rounded,
+                      color: Color(0xFF05b6ca),
+                    ),
                     iconAlignment: IconAlignment.start,
                   ),
             interval: const Duration(milliseconds: 1000),
@@ -78,7 +88,10 @@ class _CountdownTimerState extends State<CountdownTimer> {
                         'The countdown timer has completed. Go back to next set!!!'),
                     actions: <Widget>[
                       TextButton(
-                        child: const Text('OK'),
+                        child: const Text(
+                          'OK',
+                          style: TextStyle(fontSize: 30),
+                        ),
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
