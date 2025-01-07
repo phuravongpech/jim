@@ -84,13 +84,13 @@ class ExerciseCardState extends State<ExerciseCard> {
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      widget.currentWorkoutExercise.exercise.description,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        color: subTextColor,
-                      ),
-                    ),
+                    // Text(
+                    //   widget.currentWorkoutExercise.exercise.description ,
+                    //   style: const TextStyle(
+                    //     fontSize: 16,
+                    //     color: subTextColor,
+                    //   ),
+                    // ),
                     Text(
                       '${widget.currentWorkoutExercise.set} sets x 15 reps',
                       style: const TextStyle(

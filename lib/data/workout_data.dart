@@ -10,43 +10,13 @@ final user = User(
 
 final List<Exercise> exercises = [
   Exercise(
-    name: 'Barbell Squat',
-    description:
-        'Compound lower body exercise targeting quads, hamstrings, and glutes',
-  ),
-  Exercise(
-    name: 'Bench Press',
-    description:
-        'Compound upper body exercise targeting chest, triceps, and shoulders',
-  ),
-  Exercise(
-    name: 'Deadlift',
-    description: 'Full-body compound movement targeting posterior chain',
-  ),
-  Exercise(
-    name: 'Running',
-    description: 'Cardiovascular endurance exercise',
-  ),
-  Exercise(
-    name: 'Pull-ups',
-    description: 'Bodyweight exercise targeting back and arm muscles',
-  ),
-  Exercise(
-    name: 'Overhead Press',
-    description: 'Shoulder-focused compound upper body movement',
-  ),
-  Exercise(
-    name: 'Lunges',
-    description: 'Lower body unilateral exercise targeting quads and glutes',
-  ),
-  Exercise(
-    name: 'Plank',
-    description: 'Core isometric hold for stability and strength',
-  ),
-  Exercise(
-    name: 'Dumbbell Rows',
-    description: 'Back exercise for unilateral lat and trap engagement',
-  ),
+      id: '11',
+      gifUrl: 'hi',
+      bodyPart: 'h',
+      target: 'h',
+      equipment: 'hi',
+      name: 'Barbell Squat',
+      instructions: ['i']),
 ];
 
 final List<Workout> workouts = [
@@ -56,9 +26,7 @@ final List<Workout> workouts = [
     date: DateTime.now(),
     isCompleted: false,
     exercises: [
-      exercises[0], // Barbell Squat
-      exercises[2], // Deadlift
-      exercises[6], // Lunges
+      exercises[0], // Plank
     ],
     category: Category.strength,
   ),
@@ -68,9 +36,7 @@ final List<Workout> workouts = [
     date: DateTime.now().subtract(const Duration(days: 2)),
     isCompleted: true,
     exercises: [
-      exercises[1], // Bench Press
-      exercises[4], // Pull-ups
-      exercises[5], // Overhead Press
+      exercises[0], // Plank
     ],
     category: Category.powerlifting,
   ),
@@ -80,8 +46,7 @@ final List<Workout> workouts = [
     date: DateTime.now().subtract(const Duration(days: 7)),
     isCompleted: false,
     exercises: [
-      exercises[7], // Plank
-      exercises[3], // Running
+      exercises[0], // Plank
     ],
     category: Category.cardio,
   ),

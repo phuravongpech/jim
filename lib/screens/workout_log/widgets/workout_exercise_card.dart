@@ -64,10 +64,10 @@ class _WorkoutExerciseCardState extends State<WorkoutExerciseCard> {
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    widget.workoutExercise.exercise.description,
-                    style: const TextStyle(fontSize: 14, color: Colors.grey),
-                  ),
+                  // Text(
+                  //   widget.workoutExercise.exercise.description,
+                  //   style: const TextStyle(fontSize: 14, color: Colors.grey),
+                  // ),
                   const SizedBox(height: 5),
                   Text(
                     'Rest: ${widget.workoutExercise.restTimeSecond} sec',

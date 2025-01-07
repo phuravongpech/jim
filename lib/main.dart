@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:jim/data/workout_data.dart';
+import 'package:jim/screens/exercise/exercise_screen.dart';
 import 'package:jim/screens/home/home_screen.dart';
 import 'package:jim/utils/color_theme.dart';
-import 'package:logger/logger.dart';
 import 'screens/profile/profile_screen.dart';
+import 'package:logger/logger.dart';
 
-void main() {
-  final logger = Logger();
-  logger.d('hello');
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: ".env");
+  Logger().d('Environment variables loaded');
   runApp(const JimApp());
 }
 
@@ -77,6 +80,8 @@ class _MainScreenState extends State<MainScreen> {
         indicatorColor: const Color(0xFFB3E5FC),
         destinations: const [
           NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
+          NavigationDestination(
+              icon: Icon(Icons.add_circle_outline), label: 'Exercise'),
           NavigationDestination(icon: Icon(Icons.person), label: 'Profile'),
         ],
         selectedIndex: currentPageIndex,
@@ -90,6 +95,7 @@ class _MainScreenState extends State<MainScreen> {
         index: currentPageIndex,
         children: [
           const HomeScreen(),
+          const ExerciseScreen(),
           ProfileScreen(user: user),
         ],
       ),
