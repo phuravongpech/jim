@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../models/workout_exercise.dart';
 import '../../../models/workout_log.dart';
-import 'workout_exercise_log_card.dart';
+import 'log_card.dart';
 
 class WorkoutExerciseCard extends StatefulWidget {
   final WorkoutExercise workoutExercise;

@@ -16,7 +16,7 @@ final List<Exercise> exercises = [
       target: 'h',
       equipment: 'hi',
       name: 'Barbell Squat',
-      instructions: ['i']),
+      instructions: ['i', 'love', 'you']),
 ];
 
 final List<Workout> workouts = [

@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:jim/data/workout_data.dart';
 import 'package:jim/models/workout.dart';
 import 'package:logger/logger.dart';
-import 'widgets/workout_exercise_card.dart';
+import 'widgets/workout_log_exercise_card.dart';
 
 class WorkoutLogScreen extends StatelessWidget {
   final Workout currentWorkout;

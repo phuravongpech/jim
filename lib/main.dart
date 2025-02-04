@@ -4,17 +4,18 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:jim/data/workout_data.dart';
 import 'package:jim/screens/exercise/exercise_screen.dart';
 import 'package:jim/screens/home/home_screen.dart';
+import 'package:jim/services/cache_service.dart';
 import 'package:jim/utils/color_theme.dart';
 import 'screens/profile/profile_screen.dart';
 import 'package:logger/logger.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
   Logger().d('Environment variables loaded');
+  await CacheService.init();
+  Logger().d('cache init');
   runApp(const JimApp());
 }
-
 class JimApp extends StatelessWidget {
   const JimApp({super.key});
 
@@ -94,8 +95,8 @@ class _MainScreenState extends State<MainScreen> {
       body: IndexedStack(
         index: currentPageIndex,
         children: [
-          const HomeScreen(),
           const ExerciseScreen(),
+          const HomeScreen(),
           ProfileScreen(user: user),
         ],
       ),
