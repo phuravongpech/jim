@@ -16,7 +16,9 @@ class ExerciseService {
       required String bodyPart}) async {
     try {
       const String baseUrl = 'https://exercisedb.p.rapidapi.com';
-      final String apiKey = dotenv.env['API_KEY']!;
+      //final String apiKey = dotenv.env['API_KEY']!;
+      const String apiKey =
+          '6494b9755cmsh0a8cfe777f26232p128797jsnd51e85efac7b';
 
       final response = await http.get(
         Uri.parse(

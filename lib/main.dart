@@ -16,6 +16,7 @@ Future<void> main() async {
   Logger().d('cache init');
   runApp(const JimApp());
 }
+
 class JimApp extends StatelessWidget {
   const JimApp({super.key});
 

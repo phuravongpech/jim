@@ -5,25 +5,26 @@
 *.swp
 .DS_Store
 .atom/
+.build/
 .buildlog/
 .history
 .svn/
+.swiftpm/
 migrate_working_dir/
 
-# IntelliJ related
+# IntelliJ related files
 *.iml
 *.ipr
 *.iws
 .idea/
 
-# The .vscode folder contains launch configuration and tasks you configure in
-# VS Code which you may wish to be included in version control, so this line
-# is commented out by default.
+# Visual Studio Code settings (uncomment if you want to include)
 #.vscode/
 
+# Environment variables file
 .env
 
-# Flutter/Dart/Pub related
+# Flutter/Dart/Pub related files and directories
 **/doc/api/
 **/ios/Flutter/.last_build_id
 .dart_tool/
@@ -33,13 +34,47 @@ migrate_working_dir/
 .pub/
 /build/
 
-# Symbolication related
+# Symbolication related files
 app.*.symbols
 
-# Obfuscation related
+# Obfuscation related files
 app.*.map.json
 
-# Android Studio will place build artifacts here
-/android/app/debug
-/android/app/profile
-/android/app/release
+# Android Studio build artifacts
+/android/app/debug/
+/android/app/profile/
+/android/app/release/
+
+# Flutter specific
+.flutter-plugins
+.flutter-plugin-dependencies
+.metadata
+build/
+.dart_tool/
+.packages
+.pub-cache/
+
+# iOS specific
+ios/.symlinks/
+ios/Pods/
+ios/Podfile.lock
+ios/Flutter/Generated.xcconfig
+ios/Runner.xcodeproj/project.pbxproj
+ios/Runner.xcworkspace/contents.xcworkspacedata
+ios/DerivedData/
+
+# macOS specific
+macos/.symlinks/
+macos/Pods/
+macos/Podfile.lock
+macos/Flutter/Generated.xcconfig
+macos/Runner.xcodeproj/project.pbxproj
+macos/Runner.xcworkspace/contents.xcworkspacedata
+macos/DerivedData/
+
+# General files to ignore (often apply to any project)
+.DS_Store
+.idea/
+.vscode/
+*.iml
+*.swp

@@ -17,6 +17,14 @@ final List<Exercise> exercises = [
       equipment: 'hi',
       name: 'Barbell Squat',
       instructions: ['i', 'love', 'you']),
+      Exercise(
+      id: '12',
+      gifUrl: 'hi',
+      bodyPart: 'h',
+      target: 'h',
+      equipment: 'hi',
+      name: 'Barbell Squat',
+      instructions: ['i', 'love', 'you']),
 ];
 
 final List<Workout> workouts = [
@@ -27,6 +35,7 @@ final List<Workout> workouts = [
     isCompleted: false,
     exercises: [
       exercises[0], // Plank
+      exercises[1], 
     ],
     category: Category.strength,
   ),
@@ -71,9 +80,10 @@ final List<WorkoutExercise> workoutExercises = [
     restTimeSecond: 90,
     set: 3,
   ),
+  
   WorkoutExercise(
     workout: workouts[1],
-    exercise: workouts[1].exercises[0], // Bench Press
+    exercise: exercises[0], // Bench Press
     restTimeSecond: 120,
     set: 3,
   ),
